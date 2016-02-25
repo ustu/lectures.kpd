@@ -158,11 +158,11 @@ Unix-подобных системах данный интерфейс обыч�
 .. no-code-block:: bash
 
     $ nslookup lectureswww.readthedocs.org
-    Server:		192.168.1.1
-    Address:	192.168.1.1#53
+    Server:     192.168.1.1
+    Address:    192.168.1.1#53
 
     Non-authoritative answer:
-    Name:	lectureswww.readthedocs.org
+    Name:    lectureswww.readthedocs.org
     Address: 162.209.114.75
 
 **whois**
