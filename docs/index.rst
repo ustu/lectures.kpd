@@ -16,6 +16,6 @@
 
     kpd/0.net.rst
     kpd/1.arp.rst
-    kpd/2.http.rst
-    kpd/3.dns.rst
+    kpd/2.dns.rst
+    kpd/3.http.rst
     kpd/_checkpoint
