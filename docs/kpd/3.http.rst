@@ -13,6 +13,10 @@ HTTP протокол
     * `Доклад от Yandex <https://events.yandex.ru/lib/talks/537/>`_
     * https://github.com/alex/what-happens-when
 
+.. seealso::
+
+   `Презентация с лекций <http://www.slideshare.net/lectureswwwlecturesw/http-58802166>`_
+
 Протокол `HTTP` это основа Веба, через него передается основная часть веб трафика.
 HTTP является протоколом передачи данных 4го (прикладного) уровня стека протоколов `TCP/IP`.
 
