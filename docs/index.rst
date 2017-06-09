@@ -16,6 +16,9 @@
 
 .. include:: /../_lectures/docs/lect_links.rst
 
+Содержание
+----------
+
 .. toctree::
     :maxdepth: 3
 
