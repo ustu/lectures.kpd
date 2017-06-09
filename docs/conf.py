@@ -10,10 +10,9 @@
 import os
 import sys
 
-# third-party
-from config_sphinx import *  # noqa
-
 sys.path.insert(0, os.path.abspath('../_lectures/docs/'))
+
+from config_sphinx import *  # noqa isort:skip
 
 
 project = u'Каналы передачи данных'
