@@ -18,6 +18,11 @@ from config_sphinx import *  # noqa isort:skip
 project = u'Каналы передачи данных'
 html_title = project
 epub_title = project
+
+# Github
+edit_on_github_project = 'ustu/lectures.kpd'
+edit_on_github_branch = 'master'
+
 latex_documents = [
     ('index', 'lectures.tex',
      project,
