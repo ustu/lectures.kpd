@@ -16,7 +16,7 @@
 
 .. note::
 
-   Оформить в виде репозитария на `GitHub`.
+   Оформить в виде репозитария на :l:`GitHub`.
 
 * Создать проект со следующей структурой:
 
@@ -27,16 +27,17 @@
    │   └── aboutme.html
    └── index.html
 
-* В файле index.html написать 2 ссылки с прямым и абсолютным обращением
-  к aboutme.html. В файле aboutme.html создать такие же ссылки на файл index.html.
+* В файле ``index.html`` написать 2 ссылки с прямым и абсолютным обращением к
+  ``aboutme.html``. В файле aboutme.html создать такие же ссылки на файл
+  ``index.html``.
 
 Задание 2
 ---------
 
 .. note::
 
-   * Оформить в виде заметок на сервисе `Gist` от `GitHub`.
-   * http://lectureskpd.readthedocs.io/kpd/3.http.html#http-telnet
+   * Оформить в виде заметок на сервисе :l:`Gist` от :l:`GitHub`.
+   * :ref:`telnet`
 
 Подключиться по telnet к http://wikipedia.org и отправить запрос:
 
@@ -56,7 +57,7 @@
 
 .. note::
 
-   Оформить в виде заметок на сервисе `Gist` от `GitHub`.
+   Оформить в виде заметок на сервисе :l:`Gist` от :l:`GitHub`.
 
 Отправить запросы на http://httpbin.org, проанализировать ответ и код состояния.
 Описать работу HTTP протокола в каждом запросе.
@@ -106,10 +107,12 @@
 
 .. note::
 
-   Оформить в виде заметок на сервисе `Gist` от `GitHub`.
+   Оформить в виде заметок на сервисе :l:`Gist` от :l:`GitHub`.
 
-* Создать HTML форму c ``action="http://httpbin.org/post"`` ``method="POST"`` и ``enctype="multipart/form-data"``
-* Добавить в форму поля ``firstname``, ``lastname``, ``group``, ``message`` (textarea), ``myimg`` (file).
+* Создать HTML форму c ``action="http://httpbin.org/post"`` ``method="POST"`` и
+  ``enctype="multipart/form-data"``
+* Добавить в форму поля ``firstname``, ``lastname``, ``group``, ``message``
+  (textarea), ``myimg`` (file).
 * Проверить результат отправки данных формы.
 
 Проанализировать ответ. Описать работу HTTP протокола в данном случае.
