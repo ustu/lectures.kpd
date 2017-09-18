@@ -846,6 +846,8 @@ Cookie
     </body>
     </html>Connection closed by foreign host.
 
+.. _openssl:
+
 Для HTTPS протокола существуют утилиты :man:`openssl` и :man:`gnutls`:
 
 .. code-block:: bash

@@ -3,20 +3,88 @@
 Закрепление материала "Протокол HTTP"
 =====================================
 
-.. seealso::
+Цель работы
+-----------
 
-   * telnet
-   * curl
-   * http://hurl.quickblox.com.
-   * https://gist.github.com/
+Получить практические навыки по работе с ``HTTP`` протоколом посредством
+``Telnet``.
 
+Замечания к выполнению
+----------------------
 
-Задание 1
----------
+Connection closed by foreign host
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Некоторые веб-сайты расположены на серверах с установленной задержкой
+соединения, поэтому при истечении нескольких секунд сервер может принудительно
+оборвать соединение.
 
 .. note::
 
-   Оформить в виде репозитария на :l:`GitHub`.
+    * `Настройка задержки соединенний в Apache
+      <http://httpd.apache.org/docs/2.2/mod/core.html#timeout>`_
+    * `Настройка задержки соединенний в Nginx
+      <http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_send_timeout>`_
+
+Например:
+
+.. code-block:: bash
+    :emphasize-lines: 5
+
+    $ telnet wikipedia.org 80
+    Trying 91.198.174.192...
+    Connected to wikipedia.org.
+    Escape character is '^]'.
+    GET Connection closed by foreign host.
+
+Для выполнения лабораторной работы, обойти эту проблему можно сохранив текст
+запроса в начале в текстовом редакторе, а затем после установки соединения
+скопировать его в консоль.
+
+HTTPS и 400 Bad Request
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Многие сайты работают по протоколу `HTTPS`, который подразумевает обмен
+сертификатами для шифрования трафика. `Telnet` не умеет это делать в
+автоматическом режиме, поэтому если подключиться на порт `443` (HTTPS) при
+помощи `Telnet` и попробовать отправить запрос, то наверняка в ответе будет
+ошибка `400 Bad Request`.
+
+.. code-block:: bash
+
+    $ telnet wikipedia.org 443
+    Trying 91.198.174.192...
+    Connected to wikipedia.org.
+    Escape character is '^]'.
+    GET /ip HTTP/1.1
+    Host: wikipedia.org
+
+    HTTP/1.1 400 Bad Request
+    Server: nginx/1.11.13
+    Date: Mon, 18 Sep 2017 06:05:45 GMT
+    Content-Type: text/html
+    Content-Length: 272
+    Connection: close
+
+    <html>
+    <head><title>400 The plain HTTP request was sent to HTTPS port</title></head>
+    <body bgcolor="white">
+    <center><h1>400 Bad Request</h1></center>
+    <center>The plain HTTP request was sent to HTTPS port</center>
+    <hr><center>nginx/1.11.13</center>
+    </body>
+    </html>
+    Connection closed by foreign host.
+
+Отправлять запросы по `HTTPS` можно используя утилиту :ref:`openssl <openssl>`.
+
+Задания
+-------
+
+.. _issue1:
+
+Задание 1
+^^^^^^^^^
 
 * Создать проект со следующей структурой:
 
@@ -28,16 +96,18 @@
    └── index.html
 
 * В файле ``index.html`` написать 2 ссылки с прямым и абсолютным обращением к
-  ``aboutme.html``. В файле aboutme.html создать такие же ссылки на файл
+  ``aboutme.html``. В файле ``aboutme.html`` создать такие же ссылки на файл
   ``index.html``.
 
+.. _issue2:
+
 Задание 2
----------
+^^^^^^^^^
 
 .. note::
 
-   * Оформить в виде заметок на сервисе :l:`Gist` от :l:`GitHub`.
    * :ref:`telnet`
+   * http://hurl.quickblox.com.
 
 Подключиться по telnet к http://wikipedia.org и отправить запрос:
 
@@ -52,15 +122,15 @@
 
 Проанализировать ответ сервера. Описать работу HTTP протокола в данном случае.
 
+Разрешается выбрать любой другой веб-сайт вместо http://WikiPedia.org
+
+.. _issue3:
+
 Задание 3
----------
+^^^^^^^^^
 
-.. note::
-
-   Оформить в виде заметок на сервисе :l:`Gist` от :l:`GitHub`.
-
-Отправить запросы на http://httpbin.org, проанализировать ответ и код состояния.
-Описать работу HTTP протокола в каждом запросе.
+Отправить запросы на http://httpbin.org, проанализировать ответ и код
+состояния. Описать работу HTTP протокола в каждом запросе.
 
 ::
 
@@ -102,12 +172,14 @@
    Host: httpbin.org
    Accept: */*
 
+.. _issue4:
+
 Задание 4
----------
+^^^^^^^^^
 
 .. note::
 
-   Оформить в виде заметок на сервисе :l:`Gist` от :l:`GitHub`.
+   * https://html5book.ru/html5-forms/
 
 * Создать HTML форму c ``action="http://httpbin.org/post"`` ``method="POST"`` и
   ``enctype="multipart/form-data"``
@@ -116,3 +188,11 @@
 * Проверить результат отправки данных формы.
 
 Проанализировать ответ. Описать работу HTTP протокола в данном случае.
+
+Содержание отчета
+-----------------
+
+На каждое задание создать отчет, который должен быть оформлен в виде
+репозитария на :l:`GitHub` или заметок на сервисе :l:`Gist`. В отчете должно
+быть описание последовательности действий, результат выполнения заданий и
+выводы по работе.
