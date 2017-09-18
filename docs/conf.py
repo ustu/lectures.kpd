@@ -37,3 +37,5 @@ intersphinx_mapping = dict(
     list(intersphinx_mapping.items())  # noqa
     + list(my_intersphinx.items())
 )
+
+exclude_patterns += ['additions/index.rst']  # noqa

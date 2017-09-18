@@ -1,5 +1,9 @@
 .. _telnet_install:
 
+.. meta::
+   :description: Установка Telnet на Windows
+   :keywords: HTTP, протокол, telnet, Windows, MSYS2, WSL
+
 Telnet
 ======
 

@@ -1,5 +1,9 @@
 .. _http-protocol:
 
+.. meta::
+   :description: HTTP протокол
+   :keywords: HTTP, протокол, telnet, URL, URI, URN
+
 HTTP протокол
 =============
 
