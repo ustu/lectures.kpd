@@ -42,12 +42,14 @@ Telnet
 
 
 .. figure:: /_static/additions/telnet_windows_3.png
+    :width: 100%
 
     Включение опции localecho
 
 После нажатия :kbd:`Enter` установится режим передачи.
 
 .. figure:: /_static/additions/telnet_windows_4.png
+    :width: 100%
 
     HTTP запрос к сайту httpbin.org в cmd.exe
 
