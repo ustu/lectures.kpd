@@ -27,3 +27,7 @@
     kpd/2.dns.rst
     kpd/3.http.rst
     kpd/_checkpoint
+
+.. Справочник
+
+.. include:: additions/index.rst

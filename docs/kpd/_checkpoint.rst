@@ -12,6 +12,8 @@
 Замечания к выполнению
 ----------------------
 
+:ref:`Инструкция по установке Telnet на Windows <telnet_install>`.
+
 Connection closed by foreign host
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
