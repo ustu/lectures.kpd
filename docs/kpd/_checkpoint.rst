@@ -51,6 +51,7 @@ HTTPS и 400 Bad Request
 ошибка `400 Bad Request`.
 
 .. code-block:: bash
+    :emphasize-lines: 16
 
     $ telnet wikipedia.org 443
     Trying 91.198.174.192...
@@ -132,41 +133,48 @@ HTTPS и 400 Bad Request
 Отправить запросы на http://httpbin.org, проанализировать ответ и код
 состояния. Описать работу HTTP протокола в каждом запросе.
 
-::
+.. code-blocK:: text
+   :caption: /ip
 
    GET /ip HTTP/1.1
    Host: httpbin.org
    Accept: */*
 
-::
+.. code-blocK:: text
+   :caption: /get
 
    GET /get?foo=bar&1=2&2/0&error=True HTTP/1.1
    Host: httpbin.org
    Accept: */*
 
-::
+.. code-blocK:: text
+   :caption: /post
+   :emphasize-lines: 4,7
 
    POST /post HTTP/1.1
    Host: httpbin.org
    Accept: */*
-   Content-Length: 35
+   Content-Length: вычислить длину контента и втавить сюда число!!!
    Content-Type: application/x-www-form-urlencoded
 
    foo=bar&1=2&2%2F0=&error=True
 
-::
+.. code-blocK:: text
+   :caption: /cookies/set
 
    GET /cookies/set?country=Ru HTTP/1.1
    Host: httpbin.org
    Accept: */*
 
-::
+.. code-blocK:: text
+   :caption: /cookies
 
    GET /cookies HTTP/1.1
    Host: httpbin.org
    Accept: */*
 
-::
+.. code-blocK:: text
+   :caption: /redirect
 
    GET /redirect/4 HTTP/1.1
    Host: httpbin.org
