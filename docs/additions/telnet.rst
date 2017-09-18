@@ -49,7 +49,7 @@ Telnet
 
 .. figure:: /_static/additions/telnet_windows_4.png
 
-    Включение опции localecho
+    HTTP запрос к сайту httpbin.org в cmd.exe
 
 MSYS2
 ^^^^^
