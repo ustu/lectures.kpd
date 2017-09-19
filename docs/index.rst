@@ -26,6 +26,7 @@
     kpd/1.arp.rst
     kpd/2.dns.rst
     kpd/3.http.rst
+    kpd/4.http2.rst
     kpd/_checkpoint
 
 .. Справочник
