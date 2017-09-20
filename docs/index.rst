@@ -27,6 +27,13 @@
     kpd/2.dns.rst
     kpd/3.http.rst
     kpd/4.http2.rst
+
+Закрепление материала
+---------------------
+
+.. toctree::
+    :maxdepth: 1
+
     kpd/_checkpoint
 
 .. Справочник

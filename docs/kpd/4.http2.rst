@@ -5,7 +5,7 @@
    :keywords: HTTP/2, протокол, SPDY, Google
 
 HTTP/2 протокол
-=============
+===============
 
 .. seealso::
 
