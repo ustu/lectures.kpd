@@ -499,7 +499,7 @@ HTTP по умолчанию использует порт 80, это знают
 
    * https://ru.wikipedia.org/wiki/Chunked_transfer_encoding
 
-.. todo:: Переписать, что бы работало в LaTeX
+.. todo:: Переписать, чтобы работало в LaTeX
 
 .. raw:: html
 
