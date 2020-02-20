@@ -112,7 +112,14 @@ Unix-подобных системах данный интерфейс обыч�
 Способы получения IP адреса по доменному имени
 ----------------------------------------------
 
+Утилиты ``dig``, ``host``, ``nslookup`` были разработаны в составе ДНС сервера
+`BIND`.
+
 **dig**
+
+.. seealso::
+
+    * https://ru.wikipedia.org/wiki/Dig
 
 .. no-code-block:: bash
 
@@ -123,6 +130,10 @@ Unix-подобных системах данный интерфейс обыч�
     lectureswww.readthedocs.org. 299 IN     A       162.209.114.75
 
 **host**
+
+.. seealso::
+
+    * `<https://ru.wikipedia.org/wiki/Host_(программа)>`_
 
 .. no-code-block:: bash
 
@@ -155,6 +166,10 @@ Unix-подобных системах данный интерфейс обыч�
 
 **nslookup**
 
+.. seealso::
+
+   * https://ru.wikipedia.org/wiki/Nslookup
+
 .. no-code-block:: bash
 
     $ nslookup lectureswww.readthedocs.org
@@ -164,6 +179,23 @@ Unix-подобных системах данный интерфейс обыч�
     Non-authoritative answer:
     Name:    lectureswww.readthedocs.org
     Address: 162.209.114.75
+
+**telnet**
+
+.. seealso::
+
+    :ref:`Инструкция по установке Telnet на Windows <telnet_install>`.
+
+Устанавливает TCP соединение по сокету предварительно определив IP адрес
+домена.
+
+.. no-code-block:: bash
+
+    $ telnet lectureswww.readthedocs.org 80
+    Trying 23.100.69.251...
+    Connected to lectureswww.readthedocs.org.
+    Escape character is '^]'.
+
 
 **whois**
 
@@ -244,3 +276,223 @@ TLD (Top-Level Domain). Некоторые Whois сервера
    source:        TCI
 
    Last updated on 2015.02.25 12:01:33 MSK
+
+Получение IP адреса программным путем
+=====================================
+
+Единого способа получения IP адреса нет, поэтому сравним как это делают утилиты
+рассмотренные выше.
+
+.. seealso::
+
+    `Порядок разрешения имен узла Microsoft TCP/IP <https://support.microsoft.com/ru-ru/help/172218/microsoft-tcp-ip-host-name-resolution-order>`_
+
+Возьмем утилиты ``ping`` и ``host`` они похожи друг на друга. Обе
+утилиты возвращают корректный IP адрес при указании доменного имени.
+
+.. no-code-block:: bash
+
+    $ ping ya.ru
+    PING ya.ru (87.250.250.242) 56(84) bytes of data.
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=245 time=35.3 ms
+
+.. no-code-block:: bash
+
+    $ host ya.ru
+    ya.ru has address 87.250.250.242
+    ya.ru has IPv6 address 2a02:6b8::2:242
+    ya.ru mail is handled by 10 mx.yandex.ru.
+
+Проверяем кому принадлежит IP адрес ``87.250.250.242``:
+
+.. no-code-block:: bash
+
+    $ whois 87.250.250.242 -d
+
+    inetnum:        87.250.250.0 - 87.250.250.255
+    netname:        YANDEX-87-250-250
+    status:         ASSIGNED PA
+    country:        RU
+    descr:          Yandex enterprise network
+    admin-c:        YNDX1-RIPE
+    tech-c:         YNDX1-RIPE
+    remarks:        INFRA-AW
+    mnt-by:         YANDEX-MNT
+    created:        2007-03-13T13:27:33Z
+    last-modified:  2014-03-26T08:17:27Z
+    source:         RIPE
+
+    role:           Yandex LLC Network Operations
+    address:        Yandex LLC
+    address:        16, Leo Tolstoy St.
+    address:        119021
+    address:        Moscow
+    address:        Russian Federation
+    phone:          +7 495 739 7000
+    fax-no:         +7 495 739 7070
+
+Стандартного системного вызова решающего эту задачу в ОС не
+существует, есть несколько практик где можно найти IP адрес. Чаще всего утилиты
+используют эти практики но в разном порядке.
+
+В примере выше обе утилиты показывают один и тотже результат, следовательно они
+делают одно и тоже но это не совсем верно.
+
+Вот файлы, которые ping просматривает на моем ПК, которые имеют отношение к
+DNS:
+
+.. no-code-block:: bash
+   :linenos:
+   :emphasize-lines: 9-11
+
+   $ sudo strace -e openat,open -f ping -c1 ya.ru
+   openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libcap.so.2", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libidn.so.11", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/usr/lib/x86_64-linux-gnu/libnettle.so.6", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libresolv.so.2", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+   openat(AT_FDCWD, "/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/host.conf", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/hosts", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libnss_dns.so.2", O_RDONLY|O_CLOEXEC) = 5
+   openat(AT_FDCWD, "/etc/gai.conf", O_RDONLY|O_CLOEXEC) = 5
+   PING ya.ru (87.250.250.242) 56(84) bytes of data.
+   openat(AT_FDCWD, "/etc/hosts", O_RDONLY|O_CLOEXEC) = 5
+   64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=245 time=35.6 ms
+
+   --- ya.ru ping statistics ---
+   1 packets transmitted, 1 received, 0% packet loss, time 0ms
+   rtt min/avg/max/mdev = 35.670/35.670/35.670/0.000 ms
+   +++ exited with 0 +++
+
+Повторим с ``host`` то же самое:
+
+.. no-code-block:: bash
+   :linenos:
+   :emphasize-lines: 10
+
+   $ sudo strace -e openat,open -f host ya.ru
+   ...
+   [pid 16237] openat(AT_FDCWD, "/proc/self/task/16240/comm", O_RDWR) = 6
+   [pid 16237] openat(AT_FDCWD, "/usr/share/locale/en_US.UTF-8/libdst.cat", O_RDONLY) = -1 ENOENT (No such file or directory)
+   [pid 16237] openat(AT_FDCWD, "/usr/share/locale/en_US.UTF-8/LC_MESSAGES/libdst.cat", O_RDONLY) = -1 ENOENT (No such file or directory)
+   [pid 16237] openat(AT_FDCWD, "/usr/share/locale/en/libdst.cat", O_RDONLY) = -1 ENOENT (No such file or directory)
+   [pid 16237] openat(AT_FDCWD, "/usr/share/locale/en/LC_MESSAGES/libdst.cat", O_RDONLY) = -1 ENOENT (No such file or directory)
+   [pid 16237] openat(AT_FDCWD, "/usr/lib/ssl/openssl.cnf", O_RDONLY) = 6
+   strace: Process 16239 attached
+   [pid 16237] openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY) = 6
+   ya.ru has address 87.250.250.242
+   ya.ru has IPv6 address 2a02:6b8::2:242
+   ya.ru mail is handled by 10 mx.yandex.ru.
+   [pid 16237] --- SIGTERM {si_signo=SIGTERM, si_code=SI_TKILL, si_pid=16237, si_uid=0} ---
+   [pid 16238] +++ exited with 0 +++
+   [pid 16240] +++ exited with 0 +++
+   [pid 16239] +++ exited with 0 +++
+   +++ exited with 0 +++
+
+Как можно заметить ``host`` не обращается к файлу ``nsswitch.conf`` в отличии
+от утилиты ``ping``, а сразу просматривает файл настроек ``resolv.conf``.
+
+NSSwitch.conf
+-------------
+
+.. seealso::
+
+    * https://en.wikipedia.org/wiki/Name_Service_Switch
+    * :man:`nsswitch.conf`
+    * `gethostbyname <https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%BA%D0%B5%D1%82%D1%8B_%D0%91%D0%B5%D1%80%D0%BA%D0%BB%D0%B8#gethostbyname()_%D0%B8_gethostbyaddr()>`_
+    * `Переводим имя хоста в IP адрес на Python <https://lecturesnet.readthedocs.io/net/low-level/tcp.ip/dns.html#ip>`_
+
+Это конфигурационный файл который позволяет некоторым функциям в языке С
+определить порядок поиска программ.
+
+.. no-code-block:: bash
+    :linenos:
+    :emphasize-lines: 14
+
+    $ cat /etc/nsswitch.conf
+
+    # /etc/nsswitch.conf
+    #
+    # Example configuration of GNU Name Service Switch functionality.
+    # If you have the `glibc-doc-reference' and `info' packages installed, try:
+    # `info libc "Name Service Switch"' for information about this file.
+
+    passwd:         compat systemd
+    group:          compat systemd
+    shadow:         compat
+    gshadow:        files
+
+    hosts:          files dns myhostname
+    networks:       files
+
+    protocols:      db files
+    services:       db files
+    ethers:         db files
+    rpc:            db files
+
+    netgroup:       nis
+
+Параметр ``hosts`` в этом файле определяет порядок мест в которых функция
+:man:`gethostbyname` и ей подобные будут искать IP.
+
+.. no-code-block:: text
+
+                                 --> myhostname ---> /etc/hostname
+                                /
+    gethostbyname ---> NSSwitch ---> DNS        ---> /etc/resolv.conf ---> DNS Server
+                                \
+                                 --> Files      ---> /etc/hosts
+
+
+Проведем эксперимент: в файле ``nsswitch.conf`` оставим только значение
+``files``. После этого проверим будут ли работать утилиты.
+
+.. no-code-block:: bash
+
+    hosts:          files
+
+``ping`` сразу перестает работать, а ``host`` продолжает работать потому, что
+не использует файл настроек ``nsswitch.conf``.
+
+.. no-code-block:: bash
+
+    $ ping ya.ru
+    ping: ya.ru: Name or service not known
+
+Оставив в последовательности только атрибут ``files`` мы указали, что имена
+нужно брать только из файла ``/etc/hosts``. Чтобы в этом убедиться добавим IP
+ya.ru в файл ``/etc/hosts``.
+
+.. no-code-block:: bash
+
+    $ cat /etc/hosts
+    127.0.0.1       localhost
+    87.250.250.242  ya.ru
+
+``ping`` опять стал работать:
+
+.. no-code-block:: bash
+
+    $ ping ya.ru
+    PING ya.ru (87.250.250.242) 56(84) bytes of data.
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=245 time=35.7 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=2 ttl=245 time=35.2 ms
+    ^C
+    --- ya.ru ping statistics ---
+    2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+    rtt min/avg/max/mdev = 35.229/35.492/35.756/0.323 ms
+
+Таким образом программист может разными способами получить IP адрес по
+доменному имени и редактирование файла ``/etc/hosts`` не во всех случаях
+гарантирует переопределение адреса хоста. Для определения каким именно способом
+программа находит IP адрес лучше всего посмотреть трасировку системных вызовов
+этой программы при помощи утилиты ``strace``.
