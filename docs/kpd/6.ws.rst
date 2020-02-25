@@ -1,0 +1,15 @@
+.. _ws-protocol:
+
+.. meta::
+   :description: WebSocket протокол
+   :keywords: WebSocket, протокол
+
+WebSocket протокол
+==================
+
+.. todo::
+
+    https://bloggeek.me/websockets-http2/
+    https://medium.com/@pgjones/http-2-websockets-81ae3aab36dd
+    https://stackoverflow.com/questions/28582935/does-http-2-make-websockets-obsolete
+    https://building.lang.ai/our-journey-from-websockets-to-http-2-4d069c54effd

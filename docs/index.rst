@@ -26,7 +26,10 @@
     kpd/1.arp.rst
     kpd/2.dns.rst
     kpd/3.http.rst
+    kpd/3.1.https.rst
     kpd/4.http2.rst
+..    kpd/5.http3.rst
+..    kpd/6.ws.rst
 
 Закрепление материала
 ---------------------
@@ -35,6 +38,9 @@
     :maxdepth: 1
 
     kpd/_checkpoint
+    kpd/_checkpoint2
+..    kpd/_checkpoint3
+..    kpd/_checkpoint4
 
 .. Справочник
 

@@ -1,8 +1,8 @@
 .. _telnet_install:
 
 .. meta::
-   :description: Установка Telnet на Windows
-   :keywords: HTTP, протокол, telnet, Windows, MSYS2, WSL
+   :description: Установка Telnet на Windows, MacOS
+   :keywords: HTTP, протокол, telnet, Windows, MacOS, MSYS2, WSL
 
 Telnet
 ======
@@ -94,3 +94,20 @@ Windows Subsystem for Linux (WSL)
 
 После установки https://msdn.microsoft.com/en-us/commandline/wsl/install_guide
 команда `Telnet` так же будет доступна в терминале.
+
+Установка на MacOS
+------------------
+
+1. Необходимо установить пакетный менеджер `Homebrew <https://brew.sh/index_ru>`_
+
+   .. code-block:: bash
+
+        $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+2. При помощи пакетного менеджера установить `Telnet`:
+
+   .. code-block:: bash
+
+        $ brew install telnet
+
+3. После этого команда ``telnet`` появится в терминале

@@ -1,0 +1,10 @@
+.. _https-protocol:
+
+.. meta::
+   :description: HTTPS протокол
+   :keywords: HTTPS, протокол, openssl, TLS, SSL
+
+HTTP + TLS = HTTPS
+==================
+
+.. LetsEncrypt

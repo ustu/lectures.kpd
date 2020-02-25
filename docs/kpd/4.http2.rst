@@ -28,6 +28,10 @@ HTTP/2 протокол
 .. todo::
 
     https://blog.golang.org/h2push
+    https://hpbn.co/http2/
+    https://http2.github.io/http2-spec/
+    https://developers.google.com/web/fundamentals/performance/http2
+
 
 Сжатие данных
 -------------
@@ -61,3 +65,6 @@ HTTP/2 протокол
 
 Недостатки
 ^^^^^^^^^^
+
+* не симетричный протокол
+https://stackoverflow.com/questions/34026694/using-a-single-http-2-connection-for-bidirectional-and-symmetric-communication
