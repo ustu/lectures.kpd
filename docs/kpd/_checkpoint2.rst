@@ -53,7 +53,7 @@
 
    .. code-block:: bash
 
-        $ openssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes
+        $ openssl req -new -x509 -keyout key.pem -out server.pem -days 365 -nodes
 
 2. Поднять веб сервер работающий по протоколу HTTPS
 
@@ -76,7 +76,7 @@
 
    .. code-block:: bash
 
-        $ openssl s_client -connect 127.0.0.1:443
+        $ openssl s_client -connect 127.0.0.1:4443
 
 .. 3. Сгенерировать публичный ключ шифрования
 ..

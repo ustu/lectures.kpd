@@ -28,8 +28,8 @@
     kpd/3.http.rst
     kpd/3.1.https.rst
     kpd/4.http2.rst
-..    kpd/5.http3.rst
 ..    kpd/6.ws.rst
+..    kpd/5.http3.rst
 
 Закрепление материала
 ---------------------
