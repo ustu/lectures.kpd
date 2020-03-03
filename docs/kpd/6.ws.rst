@@ -13,3 +13,27 @@ WebSocket протокол
     https://medium.com/@pgjones/http-2-websockets-81ae3aab36dd
     https://stackoverflow.com/questions/28582935/does-http-2-make-websockets-obsolete
     https://building.lang.ai/our-journey-from-websockets-to-http-2-4d069c54effd
+
+Описание
+--------
+
+Формат сообщения
+----------------
+
+
+Обмен
+-----
+
+Примеры + FireBug + http://demos.kaazing.com/echo/index.html
+
+Шифрование
+----------
+
+Резюме
+------
+
+Достоинства
+^^^^^^^^^^^
+
+Недостатки
+^^^^^^^^^^

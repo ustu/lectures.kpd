@@ -84,7 +84,7 @@ HTTPS и 400 Bad Request
 Задания
 -------
 
-.. _issue1:
+.. _dz1_issue1:
 
 Задание 1
 ^^^^^^^^^
@@ -102,7 +102,7 @@ HTTPS и 400 Bad Request
   ``aboutme.html``. В файле ``aboutme.html`` создать такие же ссылки на файл
   ``index.html``.
 
-.. _issue2:
+.. _dz1_issue2:
 
 Задание 2
 ^^^^^^^^^
@@ -127,13 +127,15 @@ HTTPS и 400 Bad Request
 
 Разрешается выбрать любой другой веб-сайт вместо http://WikiPedia.org
 
-.. _issue3:
+.. _dz1_issue3:
 
 Задание 3
 ^^^^^^^^^
 
 Отправить запросы на http://httpbin.org, проанализировать ответ и код
 состояния. Описать работу HTTP протокола в каждом запросе.
+
+1. Запросить данные `GET` запросом с ресурса `ip`
 
 .. code-blocK:: text
    :caption: /ip
@@ -142,12 +144,16 @@ HTTPS и 400 Bad Request
    Host: httpbin.org
    Accept: */*
 
+2. Выполнить запрос методом `GET`
+
 .. code-blocK:: text
    :caption: /get
 
    GET /get?foo=bar&1=2&2/0&error=True HTTP/1.1
    Host: httpbin.org
    Accept: */*
+
+3. Выполнить запрос методом `POST`
 
 .. code-blocK:: text
    :caption: /post
@@ -161,12 +167,18 @@ HTTPS и 400 Bad Request
 
    foo=bar&1=2&2%2F0=&error=True
 
+Попробовать ввести неверное значение ``Content-Length``.
+
+4. Отправить запрос на установку Cookie
+
 .. code-blocK:: text
    :caption: /cookies/set
 
    GET /cookies/set?country=Ru HTTP/1.1
    Host: httpbin.org
    Accept: */*
+
+5. Просмотреть список установленных Cookie
 
 .. code-blocK:: text
    :caption: /cookies
@@ -175,6 +187,12 @@ HTTPS и 400 Bad Request
    Host: httpbin.org
    Accept: */*
 
+6. Отправить запрос на страницу с перенаправлением
+
+.. seealso::
+
+    * https://developer.mozilla.org/ru/docs/Web/HTTP/Redirections
+
 .. code-blocK:: text
    :caption: /redirect
 
@@ -182,7 +200,10 @@ HTTPS и 400 Bad Request
    Host: httpbin.org
    Accept: */*
 
-.. _issue4:
+Проверить глубину рекурсии в браузере, сравниь со значением опции
+``network.http.redirection-limit`` из ``about:config`` в браузере FireFox.
+
+.. _dz1_issue4:
 
 Задание 4
 ^^^^^^^^^

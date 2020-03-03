@@ -6,198 +6,140 @@
 Цель работы
 -----------
 
-Получить практические навыки по работе с ``HTTP`` протоколом посредством
-``Telnet``.
+Получить практические навыки по работе с протоколом ``WebSocket``.
 
 Замечания к выполнению
 ----------------------
 
-:ref:`Инструкция по установке Telnet на Windows <telnet_install>`.
+.. seealso::
 
-Connection closed by foreign host
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    * https://www.websocket.org/echo.html
+    * https://docs.aiohttp.org/en/stable/index.html
 
-Некоторые веб-сайты расположены на серверах с установленной задержкой
-соединения, поэтому при истечении нескольких секунд сервер может принудительно
-оборвать соединение.
+Пример ``WebSocket`` echo сервера на ``Python``:
 
-.. note::
+.. code-block:: python
+    :linenos:
 
-    * `Настройка задержки соединенний в Apache
-      <http://httpd.apache.org/docs/2.2/mod/core.html#timeout>`_
-    * `Настройка задержки соединенний в Nginx
-      <http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_send_timeout>`_
+    import aiohttp
+    from aiohttp import web
 
-Например:
 
-.. code-block:: bash
-    :emphasize-lines: 5
+    async def hello(request):
+        return web.Response(text="Hello, world")
 
-    $ telnet wikipedia.org 80
-    Trying 91.198.174.192...
-    Connected to wikipedia.org.
-    Escape character is '^]'.
-    GET Connection closed by foreign host.
 
-Для выполнения лабораторной работы, обойти эту проблему можно сохранив текст
-запроса в начале в текстовом редакторе, а затем после установки соединения
-скопировать его в консоль.
+    async def websocket_handler(request):
 
-HTTPS и 400 Bad Request
-^^^^^^^^^^^^^^^^^^^^^^^
+        ws = web.WebSocketResponse()
+        await ws.prepare(request)
 
-Многие сайты работают по протоколу `HTTPS`, который подразумевает обмен
-сертификатами для шифрования трафика. `Telnet` не умеет это делать в
-автоматическом режиме, поэтому если подключиться на порт `443` (HTTPS) при
-помощи `Telnet` и попробовать отправить запрос, то наверняка в ответе будет
-ошибка `400 Bad Request`.
+        async for msg in ws:
+            if msg.type == aiohttp.WSMsgType.TEXT:
+                if msg.data == "close":
+                    await ws.close()
+                else:
+                    await ws.send_str(msg.data + "/answer")
+            elif msg.type == aiohttp.WSMsgType.ERROR:
+                print("ws connection closed with exception %s" % ws.exception())
 
-.. code-block:: bash
-    :emphasize-lines: 16
+        print("websocket connection closed")
 
-    $ telnet wikipedia.org 443
-    Trying 91.198.174.192...
-    Connected to wikipedia.org.
-    Escape character is '^]'.
-    GET /ip HTTP/1.1
-    Host: wikipedia.org
+        return ws
 
-    HTTP/1.1 400 Bad Request
-    Server: nginx/1.11.13
-    Date: Mon, 18 Sep 2017 06:05:45 GMT
-    Content-Type: text/html
-    Content-Length: 272
-    Connection: close
 
-    <html>
-    <head><title>400 The plain HTTP request was sent to HTTPS port</title></head>
-    <body bgcolor="white">
-    <center><h1>400 Bad Request</h1></center>
-    <center>The plain HTTP request was sent to HTTPS port</center>
-    <hr><center>nginx/1.11.13</center>
-    </body>
-    </html>
-    Connection closed by foreign host.
+    app = web.Application()
+    app.add_routes([web.get("/", hello)])
+    app.add_routes([web.get("/ws", websocket_handler)])
+    web.run_app(app)
 
-Отправлять запросы по `HTTPS` можно используя утилиту :ref:`openssl <openssl>`.
+Пример ``AJAX`` запроса:
+
+.. code-block:: js
+    :linenos:
+
+    function get(url, callback, timeout=5 * 1000) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+      xhr.timeout = timeout;
+      xhr.ontimeout = () => {
+        console.error("Timed out " + timeout + " " + url);
+      };
+      xhr.onerror = (e) => {
+        console.error(
+            "Error "
+            + e.target.status
+            + " occurred while receiving the document."
+        );
+      };
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4
+          && (xhr.status   === 200
+            || (xhr.status === 0 && xhr.responseText))) {
+          try {
+            callback(JSON.parse(xhr.responseText));
+          } catch(e) {
+            callback(xhr.responseText);
+          }
+        } else {
+
+        }
+      };
+      xhr.send();
+    };
 
 Задания
 -------
 
-.. _issue1:
+.. _ws_issue1:
 
 Задание 1
 ^^^^^^^^^
 
-* Создать проект со следующей структурой:
+.. seealso::
 
-::
+    https://docs.aiohttp.org/en/stable/index.html
 
-   myproject/
-   ├── about
-   │   └── aboutme.html
-   └── index.html
+Написать ``WebSocket`` сервер на языке ``Python`` с использованием библиотеки
+``aiohttp``. Сервер должен уметь отдавать файлы по ``HTTP`` запросу:
 
-* В файле ``index.html`` написать 2 ссылки с прямым и абсолютным обращением к
-  ``aboutme.html``. В файле ``aboutme.html`` создать такие же ссылки на файл
-  ``index.html``.
+* http://127.0.0.1:8080/myfile1.txt
+* http://127.0.0.1:8080/myserver.py
+* http://127.0.0.1:8080/README.rst
 
-.. _issue2:
+На этом же порту иметь возможность получить файлы по адресу
+``http://127.0.0.1:8080/ws`` при помощи протокола ``WebSocket``.
+
+
+.. _ws_issue2:
 
 Задание 2
 ^^^^^^^^^
 
-.. note::
+.. seealso::
 
-   * :ref:`telnet`
-   * http://hurl.quickblox.com.
+    * `WebSocket <https://developer.mozilla.org/ru/docs/WebSockets/Writing_WebSocket_client_applications>`_
+    * `AJAX <https://developer.mozilla.org/ru/docs/Web/Guide/AJAX/%D0%A1_%D1%87%D0%B5%D0%B3%D0%BE_%D0%BD%D0%B0%D1%87%D0%B0%D1%82%D1%8C>`_
+    * `JavaScript <https://developer.mozilla.org/ru/docs/Web/JavaScript>`_
 
-Подключиться по telnet к http://wikipedia.org и отправить запрос:
+Создать проект со следующей структурой:
 
 ::
 
-   GET /wiki/страница HTTP/1.1
-   Host: ru.wikipedia.org
-   User-Agent: Mozilla/5.0 (X11; U; Linux i686; ru; rv:1.9b5) Gecko/2008050509 Firefox/3.0b5
-   Accept: text/html
-   Connection: close
-   (пустая строка)
+   myproject/
+   └── index.html
 
-Проанализировать ответ сервера. Описать работу HTTP протокола в данном случае.
+* В файле ``index.html`` добавить ``javascript`` код для получения содержимого
+  файлов с нашего сервер при помощи ``AJAX`` и протокола ``WebSocket``.
 
-Разрешается выбрать любой другой веб-сайт вместо http://WikiPedia.org
-
-.. _issue3:
+.. _ws_issue3:
 
 Задание 3
 ^^^^^^^^^
 
-Отправить запросы на http://httpbin.org, проанализировать ответ и код
-состояния. Описать работу HTTP протокола в каждом запросе.
-
-.. code-blocK:: text
-   :caption: /ip
-
-   GET /ip HTTP/1.1
-   Host: httpbin.org
-   Accept: */*
-
-.. code-blocK:: text
-   :caption: /get
-
-   GET /get?foo=bar&1=2&2/0&error=True HTTP/1.1
-   Host: httpbin.org
-   Accept: */*
-
-.. code-blocK:: text
-   :caption: /post
-   :emphasize-lines: 4,7
-
-   POST /post HTTP/1.1
-   Host: httpbin.org
-   Accept: */*
-   Content-Length: вычислить длину контента и втавить сюда число!!!
-   Content-Type: application/x-www-form-urlencoded
-
-   foo=bar&1=2&2%2F0=&error=True
-
-.. code-blocK:: text
-   :caption: /cookies/set
-
-   GET /cookies/set?country=Ru HTTP/1.1
-   Host: httpbin.org
-   Accept: */*
-
-.. code-blocK:: text
-   :caption: /cookies
-
-   GET /cookies HTTP/1.1
-   Host: httpbin.org
-   Accept: */*
-
-.. code-blocK:: text
-   :caption: /redirect
-
-   GET /redirect/4 HTTP/1.1
-   Host: httpbin.org
-   Accept: */*
-
-.. _issue4:
-
-Задание 4
-^^^^^^^^^
-
-.. note::
-
-   * https://html5book.ru/html5-forms/
-
-* Создать HTML форму c ``action="http://httpbin.org/post"`` ``method="POST"`` и
-  ``enctype="multipart/form-data"``
-* Добавить в форму поля ``firstname``, ``lastname``, ``group``, ``message``
-  (textarea), ``myimg`` (file).
-* Проверить результат отправки данных формы.
-
-Проанализировать ответ. Описать работу HTTP протокола в данном случае.
+Добавить в ``index.html`` форму для отправки запросов на получения содержимого
+файлов.
 
 Содержание отчета
 -----------------
