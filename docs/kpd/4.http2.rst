@@ -2,7 +2,7 @@
 
 .. meta::
    :description: HTTP/2 протокол
-   :keywords: HTTP/2, протокол, SPDY, Google
+   :keywords: HTTP/2, протокол, SPDY, Google, gRPC
 
 HTTP/2 протокол
 ===============
@@ -12,6 +12,8 @@ HTTP/2 протокол
     * :rfc:`7540`
     * http://httpwg.org/specs/rfc7540.html
     * https://ru.wikipedia.org/wiki/HTTP/2
+    
+    используется как транспорт для gRPC
 
 Сравнение с HTTP/1.1
 --------------------
