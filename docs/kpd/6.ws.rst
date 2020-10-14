@@ -9,6 +9,7 @@ WebSocket протокол
 
 .. todo::
 
+    https://tools.ietf.org/html/rfc6455
     https://bloggeek.me/websockets-http2/
     https://medium.com/@pgjones/http-2-websockets-81ae3aab36dd
     https://stackoverflow.com/questions/28582935/does-http-2-make-websockets-obsolete
@@ -17,17 +18,34 @@ WebSocket протокол
 Описание
 --------
 
+
 Формат сообщения
 ----------------
+
 
 
 Обмен
 -----
 
-Примеры + FireBug + http://demos.kaazing.com/echo/index.html
+Написать примеры формирования и отправки ссобщений в бинарном виде и в виде текста
+Используя клиент http://demos.kaazing.com/echo/index.html
+Проанализировать результат в отладочной консоле браузера F12 (https://developer.mozilla.org/ru/docs/Tools)
+Проанализировать результат в WireShark
 
 Шифрование
 ----------
+
+Использование
+-------------
+
+Браузеры
+Android приложения
+
+Сравнение 
+---------
+
+с HTTP2
+https://frontend-park-mailru.firebaseapp.com/slides/s6/#1
 
 Резюме
 ------
